@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5854709920403009122}
   - component: {fileID: 5384842868235449882}
-  - component: {fileID: 5736824017515549568}
+  - component: {fileID: 63714846165618757}
   - component: {fileID: 2189820180935542453}
   m_Layer: 0
   m_Name: Zombie0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5736824017515549568
+--- !u!114 &63714846165618757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,10 +95,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1053009247054243158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77caaede5eb49ac42b17b5e427af2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: eec9e8f9433b4cc2a5de349331aceec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  hp: 10
+  atk: 10
+  state: 0
+  enemyType: 0
+  speed: 3.5
 --- !u!61 &2189820180935542453
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -106,7 +110,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053009247054243158}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

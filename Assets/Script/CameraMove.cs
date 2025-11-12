@@ -1,27 +1,29 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Script
 {
     public class CameraMove : MonoBehaviour
     {
-        [SerializeField] private GameObject player;
-        private Transform _playerTras;
+        public Transform playerTrans;
+        public float moveSpeed;
+        private float _distance = 10;
+        private Vector3 offset;
 
         private void Awake()
         {
-            if (player)
-            {
-                _playerTras = player.transform;
-            }
+            offset = Vector3.forward * -_distance;
         }
 
         private void LateUpdate()
         {
-            if (_playerTras)
-            {
-                this.transform.position = Vector3.right * _playerTras.position.x + Vector3.up * _playerTras.position.y +
-                                          Vector3.forward * transform.position.z;
-            }
+            if (!playerTrans)
+                return;
+
+            Vector3 newPos = Vector3.Lerp(this.transform.position, playerTrans.position + offset,
+                moveSpeed * Time.deltaTime);
+            this.transform.position = newPos;
         }
     }
 }
