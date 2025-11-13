@@ -41,11 +41,14 @@ namespace Script
                 return;
             }
 
-            if (_callbackListDic.TryGetValue(path, out List<UnityAction<Object>> callbackList))
+            if (!_callbackListDic.ContainsKey(path))
             {
-                callbackList.Add((obj) => { callback.Invoke(obj as T); });
-                return;
+                _callbackListDic[path] = new List<UnityAction<Object>>();
             }
+
+            List<UnityAction<Object>> callbackList = _callbackListDic[path];
+            callbackList.Add((obj) => { callback.Invoke(obj as T); });
+
 
             MonoManager.Instance.StartCoroutine(LoadAsyncCoroutine<T>(path));
         }
