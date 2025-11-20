@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Script.Weapon;
 using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -65,6 +66,22 @@ namespace Script
             _player.transform.position = pos;
         }
 
+        public void StartWeapon()
+        {
+            foreach (var weaponBase in _weapons)
+            {
+                weaponBase.OnStart();
+            }
+        }
+
+        public void StopWeapon()
+        {
+            foreach (var weaponBase in _weapons)
+            {
+                weaponBase.OnStop();
+            }
+        }
+
         public void AddWeapon(WeaponType weaponType)
         {
             switch (weaponType)
@@ -80,7 +97,9 @@ namespace Script
             if (weaponComponentPrefab == null)
                 return;
             var weapon = Object.Instantiate(weaponComponentPrefab);
+            weapon.SetSpawnTarget(_player.transform);
             _weapons.Add(weapon);
+            StartWeapon();
         }
 
         public void OnEnable()
@@ -93,15 +112,6 @@ namespace Script
         {
             if (InputManager.Instance)
                 InputManager.Instance.OnMovementInput -= PlayerMove;
-        }
-
-        public void Update()
-        {
-            for (int i = 0; i < _weapons.Count; i++)
-            {
-                WeaponBase weaponBase = _weapons[i];
-                weaponBase.UpdateWeapon();
-            }
         }
     }
 }

@@ -30,6 +30,9 @@ namespace Script
             //创建玩家
             yield return StartCoroutine(_playerManager.CreatePlayer());
 
+            //测试添加武器
+            _playerManager.AddWeapon(WeaponType.Whip);
+
             //等玩家创建完之后，给相机加上追踪脚本，跟着玩家
             var mainCamera = Camera.main;
             if (mainCamera)
@@ -45,7 +48,6 @@ namespace Script
 
         private void Update()
         {
-            _playerManager.Update();
             _enemyManager.Update();
         }
 
