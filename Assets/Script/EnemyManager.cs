@@ -59,7 +59,7 @@ namespace Script
                 EnemyBase enemy = queue.Dequeue();
                 enemy.transform.position = spawnPos;
                 enemy.gameObject.SetActive(true);
-                //TODO:专门调用函数来重置它的状态
+                enemy.OnReset();
                 _enemyList.Add(enemy);
                 return;
             }
@@ -82,6 +82,7 @@ namespace Script
                 return;
             EnemyBase newEnemy = Object.Instantiate(enemyComponentPrefab, spawnPos, Quaternion.identity);
             _enemyList.Add(newEnemy);
+            newEnemy.OnReset();
         }
 
         public void Update()

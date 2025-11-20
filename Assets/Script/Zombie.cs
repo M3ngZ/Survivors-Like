@@ -4,13 +4,16 @@ namespace Script
 {
     public class Zombie : EnemyBase
     {
-        [SerializeField] private float speed;
+        public override void OnReset()
+        {
+            configSO.CopyData(ref runtimeSOData);
+        }
 
         public override void UpdateMove(Transform target)
         {
             Vector3 direction = target.position - transform.position;
             Vector3 normalDir = direction.normalized;
-            transform.position += normalDir * (Time.deltaTime * speed);
+            transform.position += normalDir * (Time.deltaTime * runtimeSOData.baseMoveSpeed);
         }
 
         public override void OnTriggerStay2D(Collider2D other)
