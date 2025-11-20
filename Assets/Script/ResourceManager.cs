@@ -41,14 +41,16 @@ namespace Script
                 return;
             }
 
-            if (!_callbackListDic.ContainsKey(path))
+            UnityAction<Object> action = obj => callback?.Invoke(obj as T);
+            //如果存在回调列表，说明资源已经在加载中了！此时进入等待列表
+            if (_callbackListDic.TryGetValue(path, out var callbackList))
             {
-                _callbackListDic[path] = new List<UnityAction<Object>>();
+                callbackList.Add(action);
+                return;
             }
 
-            List<UnityAction<Object>> callbackList = _callbackListDic[path];
-            callbackList.Add((obj) => { callback.Invoke(obj as T); });
-
+            callbackList = new List<UnityAction<Object>> { action };
+            _callbackListDic.Add(path, callbackList);
 
             MonoManager.Instance.StartCoroutine(LoadAsyncCoroutine<T>(path));
         }
@@ -58,21 +60,26 @@ namespace Script
         {
             var req = Resources.LoadAsync<T>(path);
             yield return req;
-            if (req.asset == null)
+
+            Object asset = req.asset;
+            if (asset != null)
             {
-                // Debug.LogWarning($"资源加载出错，路径：{path} 不存在，或类型错误");
+                _resourceCacheDic.TryAdd(path, asset);
+            }
+            else
+            {
+                Debug.LogError($"[ResManager] 资源加载失败，路径不存在: {path}");
+            }
+
+            if (_callbackListDic.TryGetValue(path, out var callbackList))
+            {
+                foreach (var callback in callbackList)
+                {
+                    callback?.Invoke(asset);
+                }
+
                 _callbackListDic.Remove(path);
-                yield break;
             }
-
-            _resourceCacheDic.Add(path, req.asset);
-
-            foreach (UnityAction<Object> callback in _callbackListDic[path])
-            {
-                callback?.Invoke(req.asset);
-            }
-
-            _callbackListDic.Remove(path);
         }
 
         #endregion
