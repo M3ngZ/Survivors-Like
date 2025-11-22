@@ -15,4 +15,4 @@ MonoBehaviour:
   data:
     baseHp: 5
     baseAtk: 5
-    baseMoveSpeed: 3
+    baseMoveSpeed: 1

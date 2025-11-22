@@ -31,5 +31,7 @@ namespace Script
         public abstract void TakeDamage(float targetAtk);
 
         public abstract StateEnum GetState();
+
+        public abstract void UpdateMoveWithForce(Transform target, Vector2 separationForce);
     }
 }
