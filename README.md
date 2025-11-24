@@ -8,7 +8,9 @@
 
 ![海量怪物演示](Docs/multi.gif)
 
-![打怪演示](Docs\hit.gif)
+
+
+![打怪演示](Docs/hit.gif)
 
 ## 2. 核心技术点
 
