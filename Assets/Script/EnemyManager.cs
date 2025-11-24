@@ -33,7 +33,7 @@ namespace Script
         public void StartSpawn()
         {
             //测试用的生成怪物
-            MonoManager.Instance.StartCoroutine(SpawnEnemyCoroutine(1000));
+            MonoManager.Instance.StartCoroutine(SpawnEnemyCoroutine(100));
         }
 
         private IEnumerator SpawnEnemyCoroutine(int count)

@@ -12,7 +12,6 @@ namespace Script.Weapon
         [SerializeField] private GameObject whipSpObject;
         [SerializeField] private GameObject whipColliderObj;
 
-        [SerializeField] private WeaponSO weaponConfig;
         private WeaponData _runTimeWeaponData;
 
         private Coroutine _coroutine;
@@ -43,6 +42,7 @@ namespace Script.Weapon
         public override void OnUse()
         {
             this.transform.position = spawnTarget.position;
+            this.transform.localScale = spawnTarget.localScale;
             whipColliderObj.SetActive(true);
             whipAni.Play();
         }
@@ -67,6 +67,11 @@ namespace Script.Weapon
                 OnOver();
                 yield return new WaitForSeconds(_runTimeWeaponData.cd);
             }
+        }
+
+        public override float GetDamageValue()
+        {
+            return _runTimeWeaponData.baseAtk;
         }
     }
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Zombie0SO
   m_EditorClassIdentifier: 
   data:
-    baseHp: 5
+    baseHp: 3
     baseAtk: 5
-    baseMoveSpeed: 3
+    baseMoveSpeed: 1

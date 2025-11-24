@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using Script.SO;
+using UnityEngine;
 
 namespace Script.Weapon
 {
     public abstract class WeaponBase : MonoBehaviour
     {
         protected Transform spawnTarget;
+
+        [SerializeField] protected WeaponSO weaponConfig;
 
         //启动循环
         public abstract void OnStart();
@@ -20,5 +23,6 @@ namespace Script.Weapon
 
         //设置创建时的中心点
         public abstract void SetSpawnTarget(Transform target);
+        public abstract float GetDamageValue();
     }
 }

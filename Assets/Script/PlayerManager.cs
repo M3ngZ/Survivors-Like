@@ -63,7 +63,17 @@ namespace Script
             Vector3 pos = _player.transform.position;
             pos.x += delta.x * moveSpeed * Time.deltaTime;
             pos.y += delta.y * moveSpeed * Time.deltaTime;
-            _player.transform.position = pos;
+            var transform = _player.transform;
+            transform.position = pos;
+            if (delta.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            if (delta.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
 
         public void StartWeapon()

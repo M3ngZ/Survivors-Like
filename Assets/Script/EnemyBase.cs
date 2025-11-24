@@ -23,10 +23,7 @@ namespace Script
 
         public abstract void UpdateMove(Transform target);
 
-        //检测攻击
-        // public abstract bool CheckAttack();
-
-        public abstract void OnTriggerStay2D(Collider2D other);
+        public abstract void OnTriggerEnter2D(Collider2D other);
 
         public abstract void TakeDamage(float targetAtk);
 

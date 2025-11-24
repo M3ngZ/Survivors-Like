@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using Script.Weapon;
+using UnityEngine;
 
 namespace Script
 {
     public class Zombie : EnemyBase
     {
+        [SerializeField] private Rigidbody2D rb;
+
         public override void OnReset()
         {
+            state = StateEnum.Alive;
             configSO.CopyData(ref runtimeSOData);
         }
 
@@ -13,15 +17,34 @@ namespace Script
         {
             Vector3 direction = target.position - transform.position;
             Vector3 normalDir = direction.normalized;
-            transform.position += normalDir * (Time.deltaTime * runtimeSOData.baseMoveSpeed);
+            rb.velocity = normalDir * runtimeSOData.baseMoveSpeed;
+            if (normalDir.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            if (normalDir.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
 
-        public override void OnTriggerStay2D(Collider2D other)
+        public override void OnTriggerEnter2D(Collider2D other)
         {
+            var weaponBase = other.GetComponentInParent<WeaponBase>();
+            if (weaponBase == null)
+            {
+                return;
+            }
+
+            TakeDamage(weaponBase.GetDamageValue());
         }
 
         public override void TakeDamage(float targetAtk)
         {
+            runtimeSOData.baseHp -= targetAtk;
+            if (runtimeSOData.baseHp <= 0)
+                state = StateEnum.Dead;
         }
 
         public override StateEnum GetState()
